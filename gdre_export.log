@@ -1,0 +1,43 @@
+GDRE Tools v1.0.2
+Windows 10.0.17763, GeForce GTX 1060 6GB, opengl3
+Opening file: E:/Godot_v4.5-stable_mono_win64/base.apk
+WARNING: Duplicate ID found in cache: 477011808865626474 -> res://Calculator.cs
+Replacing with: res://Caculator.cs
+   at: GDRESettings::load_pack_uid_cache (modules\gdsdecomp\utility\gdre_settings.cpp:1680)
+WARNING: Duplicate ID found in cache: 1963984255892856991 -> res://D.cs
+Replacing with: res://refractiveIndex.cs
+   at: GDRESettings::load_pack_uid_cache (modules\gdsdecomp\utility\gdre_settings.cpp:1680)
+Guessing bytecode revision from engine version: 4.5.0.stable (rev 0xebc36a7)
+Loaded 2 imported files
+Detected Engine Version: 4.5.0.stable
+Detected Bytecode Revision: 4.5-beta.2 (ebc36a7)
+ERROR: Condition "!windows.has(p_window)" is true.
+   at: DisplayServerWindows::window_move_to_foreground (platform\windows\display_server_windows.cpp:2744)
+Extracted 716 files, no errors detected!
+Saved project config.
+
+
+********************************EXPORT REPORT********************************
+
+Totals:                                 
+Decompiled scripts:                     0
+Failed scripts:                         0
+Imported resources for export session:  2
+Successfully converted:                 2
+Lossy:                                  1
+Rewrote metadata:                       1
+Non-importable conversions:             0
+Not converted:                          0
+Failed conversions:                     0
+-------------
+
+
+
+------------------------------------------------------------------------------------
+
+Use Godot editor version 4.5.0.stable to edit the project.
+Note: the project may be using a custom version of Godot. Detection for this has not been implemented yet.
+If you find that you have many non-import errors upon opening the project 
+(i.e. scripts or shaders have many errors), use the original game's binary as the export template.
+
+*******************************************************************************

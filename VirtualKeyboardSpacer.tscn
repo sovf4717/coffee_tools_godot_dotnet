@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bbugahy722yar"]
+
+[ext_resource type="Script" uid="uid://cf0vci200oqsy" path="res://VirtualKeyboardSpacer.cs" id="1_wxmbo"]
+
+[node name="MarginContainer" type="MarginContainer"]
+offset_left = 38.0
+offset_top = 91.0
+offset_right = 535.0
+offset_bottom = 310.0
+script = ExtResource("1_wxmbo")

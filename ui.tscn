@@ -1,0 +1,430 @@
+[gd_scene load_steps=10 format=3 uid="uid://lerjhitlkp4p"]
+
+[ext_resource type="Script" uid="uid://g2ckx55gyw6u" path="res://Calculator.cs" id="1"]
+[ext_resource type="Script" uid="uid://cccbg1afpnds1" path="res://KeyboardHandler.cs" id="1_nltto"]
+[ext_resource type="Script" uid="uid://bnskmfth2ni6p" path="res://SaveData.cs" id="2_m6e0p"]
+[ext_resource type="Script" uid="uid://divvj8q02r458" path="res://LoadData.cs" id="4_nltto"]
+[ext_resource type="Script" uid="uid://vfxvfbtw1v16" path="res://NodeTreePrinter.cs" id="6_n5ude"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xb563"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fyqef"]
+
+[sub_resource type="SystemFont" id="SystemFont_xb563"]
+subpixel_positioning = 0
+
+[sub_resource type="CSharpScript" id="CSharpScript_ibotj"]
+script/source = "sing Godot;
+using System;
+
+// 类名必须和文件名 drag.cs 完全一致（全小写）
+public partial class Drag : ScrollContainer
+{
+	private bool _isDrag = false;
+	private float _startPos = 0f;
+	private VScrollBar _vScrollBar;
+
+	public override void _Ready()
+	{
+		_vScrollBar = GetVScrollBar();
+		if (_vScrollBar == null)
+		{
+			GD.PrintErr(\"未找到垂直滚动条！请开启 ScrollContainer 的垂直滚动\");
+		}
+	}
+
+	// 绑定 gui_input 信号的方法
+	public void OnGuiInput(InputEvent @event)
+	{
+		if (_vScrollBar == null) return;
+
+		// 鼠标左键按下
+		if (@event is InputEventMouseButton mouseBtnEvent && 
+			mouseBtnEvent.ButtonIndex == MouseButton.Left && 
+			mouseBtnEvent.IsPressed())
+		{
+			_isDrag = true;
+			_startPos = mouseBtnEvent.Position.Y;
+		}
+
+		// 鼠标左键松开
+		if (@event is InputEventMouseButton releaseBtnEvent && 
+			releaseBtnEvent.ButtonIndex == MouseButton.Left && 
+			!releaseBtnEvent.IsPressed())
+		{
+			_isDrag = false;
+			_startPos = 0f;
+		}
+
+		// 拖拽滚动
+		if (_isDrag && @event is InputEventMouseMotion mouseMotionEvent)
+		{
+			float offset = mouseMotionEvent.Position.Y - _startPos;
+			_vScrollBar.Value = _vScrollBar.Value - offset;
+			_startPos = mouseMotionEvent.Position.Y;
+		}
+	}
+}
+"
+
+[node name="Control" type="Control"]
+layout_direction = 4
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_nltto")
+
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2(186, 47)
+
+[node name="center" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -47.0
+offset_top = -478.5
+offset_right = -47.0
+offset_bottom = -478.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TabContainer" type="TabContainer" parent="center"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -53.0
+offset_top = -106.0
+offset_right = 115.0
+offset_bottom = -14.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/drop_mark_color = Color(0, 0, 0, 1)
+theme_override_colors/font_selected_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hovered_color = Color(0, 0, 0, 1)
+theme_override_colors/font_unselected_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/panel = SubResource("StyleBoxEmpty_xb563")
+theme_override_styles/tabbar_background = SubResource("StyleBoxEmpty_fyqef")
+current_tab = 1
+clip_tabs = false
+
+[node name="计算" type="Label" parent="center/TabContainer"]
+visible = false
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+script = ExtResource("1")
+metadata/_tab_index = 0
+
+[node name="Control" type="Control" parent="center/TabContainer/计算"]
+anchors_preset = 0
+offset_left = -189.0
+offset_right = -189.0
+
+[node name="折光率" type="Label" parent="center/TabContainer/计算/Control"]
+layout_mode = 0
+offset_left = 107.0
+offset_right = 231.0
+offset_bottom = 109.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = SubResource("SystemFont_xb563")
+theme_override_font_sizes/font_size = 38
+text = "折光率:
+"
+horizontal_alignment = 1
+
+[node name="折光率输入" type="TextEdit" parent="center/TabContainer/计算/Control"]
+layout_mode = 0
+offset_left = 239.0
+offset_top = 10.0
+offset_right = 409.0
+offset_bottom = 60.0
+theme_override_font_sizes/font_size = 38
+
+[node name="浓度显示" type="Label" parent="center/TabContainer/计算/Control"]
+layout_mode = 0
+offset_left = 236.0
+offset_top = 72.0
+offset_right = 404.0
+offset_bottom = 125.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 38
+
+[node name="浓度" type="Label" parent="center/TabContainer/计算/Control"]
+layout_mode = 0
+offset_left = 144.0
+offset_top = 65.0
+offset_right = 230.0
+offset_bottom = 118.00001
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 38
+text = "浓度:"
+
+[node name="粉重" type="Label" parent="center/TabContainer/计算/Control"]
+layout_mode = 0
+offset_left = 146.0
+offset_top = 125.0
+offset_right = 232.0
+offset_bottom = 178.00003
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 38
+text = "粉重:"
+
+[node name="粉重输入" type="TextEdit" parent="center/TabContainer/计算/Control"]
+layout_mode = 0
+offset_left = 239.0
+offset_top = 130.0
+offset_right = 409.0
+offset_bottom = 180.0
+theme_override_font_sizes/font_size = 38
+
+[node name="液重" type="Label" parent="center/TabContainer/计算/Control"]
+layout_mode = 0
+offset_left = 146.0
+offset_top = 185.0
+offset_right = 232.0
+offset_bottom = 238.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 38
+text = "液重:"
+
+[node name="液重输入" type="TextEdit" parent="center/TabContainer/计算/Control"]
+layout_mode = 0
+offset_left = 239.0
+offset_top = 190.0
+offset_right = 409.0
+offset_bottom = 240.0
+theme_override_font_sizes/font_size = 38
+
+[node name="萃取率显示" type="Label" parent="center/TabContainer/计算/Control"]
+layout_mode = 0
+offset_left = 236.0
+offset_top = 250.0
+offset_right = 404.0
+offset_bottom = 303.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 38
+
+[node name="萃取率" type="Label" parent="center/TabContainer/计算/Control"]
+layout_mode = 0
+offset_left = 108.0
+offset_top = 250.0
+offset_right = 232.0
+offset_bottom = 359.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = SubResource("SystemFont_xb563")
+theme_override_font_sizes/font_size = 38
+text = "萃取率:
+"
+horizontal_alignment = 1
+
+[node name="温度" type="Label" parent="center/TabContainer/计算/Control"]
+layout_mode = 0
+offset_left = 128.0
+offset_top = 315.0
+offset_right = 252.0
+offset_bottom = 424.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = SubResource("SystemFont_xb563")
+theme_override_font_sizes/font_size = 38
+text = "温度:
+"
+horizontal_alignment = 1
+
+[node name="温度输入" type="TextEdit" parent="center/TabContainer/计算/Control"]
+layout_mode = 0
+offset_left = 239.0
+offset_top = 320.0
+offset_right = 409.0
+offset_bottom = 370.0
+theme_override_font_sizes/font_size = 38
+
+[node name="研磨度" type="Label" parent="center/TabContainer/计算/Control"]
+layout_mode = 0
+offset_left = 108.0
+offset_top = 375.0
+offset_right = 232.0
+offset_bottom = 484.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = SubResource("SystemFont_xb563")
+theme_override_font_sizes/font_size = 38
+text = "研磨度:
+"
+horizontal_alignment = 1
+
+[node name="研磨度输入" type="TextEdit" parent="center/TabContainer/计算/Control"]
+layout_mode = 0
+offset_left = 239.0
+offset_top = 380.0
+offset_right = 409.0
+offset_bottom = 430.0
+theme_override_font_sizes/font_size = 38
+
+[node name="时间" type="Label" parent="center/TabContainer/计算/Control"]
+layout_mode = 0
+offset_left = 128.0
+offset_top = 435.0
+offset_right = 252.0
+offset_bottom = 544.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = SubResource("SystemFont_xb563")
+theme_override_font_sizes/font_size = 38
+text = "时间:
+"
+horizontal_alignment = 1
+
+[node name="时间输入" type="TextEdit" parent="center/TabContainer/计算/Control"]
+layout_mode = 0
+offset_left = 239.0
+offset_top = 440.0
+offset_right = 409.0
+offset_bottom = 490.0
+theme_override_font_sizes/font_size = 38
+
+[node name="流速" type="Label" parent="center/TabContainer/计算/Control"]
+layout_mode = 0
+offset_left = 128.0
+offset_top = 495.0
+offset_right = 252.0
+offset_bottom = 604.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = SubResource("SystemFont_xb563")
+theme_override_font_sizes/font_size = 38
+text = "流速:
+"
+horizontal_alignment = 1
+
+[node name="流速输入" type="TextEdit" parent="center/TabContainer/计算/Control"]
+layout_mode = 0
+offset_left = 239.0
+offset_top = 500.0
+offset_right = 409.0
+offset_bottom = 550.0
+theme_override_font_sizes/font_size = 38
+
+[node name="制作方式" type="Label" parent="center/TabContainer/计算/Control"]
+layout_mode = 0
+offset_left = 67.0
+offset_top = 555.0
+offset_right = 236.0
+offset_bottom = 664.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = SubResource("SystemFont_xb563")
+theme_override_font_sizes/font_size = 38
+text = "制作方式:
+"
+horizontal_alignment = 1
+
+[node name="制作方式输入" type="TextEdit" parent="center/TabContainer/计算/Control"]
+layout_mode = 0
+offset_left = 236.0
+offset_top = 560.0
+offset_right = 416.0
+offset_bottom = 620.0
+theme_override_font_sizes/font_size = 38
+
+[node name="豆子" type="Label" parent="center/TabContainer/计算/Control"]
+layout_mode = 0
+offset_left = 144.0
+offset_top = 620.0
+offset_right = 234.0
+offset_bottom = 729.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = SubResource("SystemFont_xb563")
+theme_override_font_sizes/font_size = 38
+text = "豆子:
+"
+horizontal_alignment = 1
+
+[node name="豆子输入" type="TextEdit" parent="center/TabContainer/计算/Control"]
+layout_mode = 0
+offset_left = 233.0
+offset_top = 630.0
+offset_right = 413.0
+offset_bottom = 690.0
+theme_override_font_sizes/font_size = 38
+
+[node name="下次制作建议" type="TextEdit" parent="center/TabContainer/计算/Control"]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 700.0
+offset_right = 523.0
+offset_bottom = 766.0
+theme_override_font_sizes/font_size = 21
+placeholder_text = "下次制作建议"
+drag_and_drop_selection_enabled = false
+wrap_mode = 1
+
+[node name="备注" type="TextEdit" parent="center/TabContainer/计算/Control"]
+layout_mode = 0
+offset_left = 57.0
+offset_top = 775.0
+offset_right = 521.0
+offset_bottom = 903.0
+theme_override_font_sizes/font_size = 21
+placeholder_text = "风味感受，备注,段数，压力
+"
+drag_and_drop_selection_enabled = false
+wrap_mode = 1
+
+[node name="保存" type="Button" parent="center/TabContainer/计算/Control"]
+layout_mode = 0
+offset_left = 186.0
+offset_top = 935.0
+offset_right = 346.0
+offset_bottom = 996.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 38
+action_mode = 0
+text = "保存"
+script = ExtResource("2_m6e0p")
+
+[node name="日志" type="Label" parent="center/TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="center/TabContainer/日志"]
+clip_contents = false
+layout_mode = 0
+offset_left = -171.335
+offset_right = 377.64496
+offset_bottom = 1120.0
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+script = SubResource("CSharpScript_ibotj")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="center/TabContainer/日志/ScrollContainer"]
+custom_minimum_size = Vector2(540, 1120)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="LoadData" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("4_nltto")
+
+[node name="输出节点树" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("6_n5ude")
+
+[connection signal="gui_input" from="center/TabContainer/日志/ScrollContainer" to="center/TabContainer/日志/ScrollContainer" method="_on_gui_input"]

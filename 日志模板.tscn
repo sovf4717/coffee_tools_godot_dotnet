@@ -1,0 +1,113 @@
+[gd_scene format=3 uid="uid://xorf42vcci4r"]
+
+[node name="Panel模板" type="Panel"]
+custom_minimum_size = Vector2(540, 112)
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -270.0
+offset_right = 270.0
+offset_bottom = 112.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 540.0
+offset_bottom = 143.0
+theme_override_constants/separation = 0
+
+[node name="日期时间" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+mouse_filter = 1
+theme_override_font_sizes/font_size = 20
+text = "日期时间"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_direction = 2
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="折光率" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+mouse_filter = 1
+theme_override_font_sizes/font_size = 20
+text = "123456"
+
+[node name="浓度" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+mouse_filter = 1
+theme_override_font_sizes/font_size = 20
+text = "1234567"
+
+[node name="粉重" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+mouse_filter = 1
+theme_override_font_sizes/font_size = 20
+text = "12"
+
+[node name="液重" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+mouse_filter = 1
+theme_override_font_sizes/font_size = 20
+text = "123"
+
+[node name="萃取率" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+mouse_filter = 1
+theme_override_font_sizes/font_size = 20
+text = "12345"
+
+[node name="温度" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+mouse_filter = 1
+theme_override_font_sizes/font_size = 20
+text = "12"
+
+[node name="研磨度" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+mouse_filter = 1
+theme_override_font_sizes/font_size = 20
+text = "12"
+
+[node name="时间" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+mouse_filter = 1
+theme_override_font_sizes/font_size = 20
+text = "123"
+
+[node name="流速" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+mouse_filter = 1
+theme_override_font_sizes/font_size = 20
+text = "12"
+
+[node name="制作方式" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+mouse_filter = 1
+theme_override_font_sizes/font_size = 20
+text = "1234"
+
+[node name="豆子" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+mouse_filter = 1
+theme_override_font_sizes/font_size = 20
+text = "12"
+
+[node name="下次制作建议" type="Label" parent="VBoxContainer"]
+custom_minimum_size = Vector2(540, 28)
+layout_mode = 2
+mouse_filter = 1
+theme_override_font_sizes/font_size = 20
+text = "下次制作建议"
+autowrap_mode = 3
+
+[node name="备注" type="Label" parent="VBoxContainer"]
+custom_minimum_size = Vector2(540, 28)
+layout_mode = 2
+mouse_filter = 1
+theme_override_font_sizes/font_size = 20
+text = "备注"
+autowrap_mode = 3
